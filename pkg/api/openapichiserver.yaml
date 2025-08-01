@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../configuration-schema.json
+package: api
+output: api/chi-server.gen.go
+generate:
+  models: true
+  chi-server: true
+output-options:
+  # NOTE that this is only required for the `Unreferenced` type
+  skip-prune: true

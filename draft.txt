@@ -1,0 +1,11 @@
+std-http-server
+
+oapi-codegen -package api -generate "types,std-http-server" api/openapi.yaml > api/api.gen.go
+
+//go:generate go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen --config internal/codegen/codegen.yaml internal/api/openapi.yaml
+//go:generate go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen api/openapi.yaml
+
+
+go get gorm.io/gorm
+go get gorm.io/driver/postgres
+go get github.com/google/uuid # For proper UUID handling in Go/DB

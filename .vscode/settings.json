@@ -1,0 +1,83 @@
+{
+    "window.commandCenter": true,
+
+    // === General VS Code Editor Settings ===
+    "editor.tabSize": 4, // Go's standard indentation
+    "editor.insertSpaces": false, // Go prefers tabs
+    "editor.renderWhitespace": "all", // See all whitespace, useful for tabs vs spaces
+    "editor.minimap.enabled": true, // Overview of your file, useful for large files
+    "editor.rulers": [80, 120], // Go community often adheres to 80-char line limit, 120 for others
+    "editor.wordWrap": "on", // Wrap long lines
+    "editor.formatOnSave": true, // Essential for Go, let gopls handle this
+    "editor.defaultFormatter": "golang.go", // Ensure Go files use the Go formatter
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit" // Automatically run goimports on save
+    },
+    
+    // === Appearance and General Productivity (Non-Go Specific but helpful) ===
+    "workbench.iconTheme": "vs-seti", // Better file icons
+    "workbench.colorTheme": "Default Dark Modern", // Or your preferred theme (e.g., One Dark Pro, Dracula)
+    "editor.fontFamily": "Fira Code, 'Cascadia Code', Consolas, 'Courier New', monospace", // Font with ligatures is great
+    "editor.fontLigatures": true, // For Fira Code or other ligature fonts
+    "terminal.integrated.defaultProfile.windows": "PowerShell", // Or "Git Bash", "cmd"
+    "terminal.integrated.defaultProfile.linux": "bash", // Or "zsh"
+    "terminal.integrated.fontSize": 14, // Adjust as per your preference
+    "files.associations": {
+        "*.gohtml": "html", // If you work with Go HTML templates
+        "*.gotmpl": "gohtml"
+    },
+    "git.autofetch": true, // Keep your local branches updated
+    "git.confirmSync": false, // Don't ask for confirmation on sync
+
+    // === Go Extension Specific Settings ===
+    "go.useLanguageServer": true, // Crucial: Enables gopls
+    "go.toolsManagement.autoUpdate": true, // Keep your Go tools (gopls, dlv, etc.) up-to-date
+    "go.lintOnSave": "package", // Lint current package on save (can be "workspace" for stricter, "file" for lighter)
+    "go.lintTool": "golangci-lint", // Most powerful linter for Go
+    "go.lintFlags": [
+        "--fast", // Faster linting on save
+        "--timeout=5m", // Increase timeout for large projects
+        "--fix" // Automatically apply fixes where possible
+    ],
+    "go.testFlags": [
+        "-v", // Verbose test output
+        "-race", // Enable data race detection (highly recommended for concurrency)
+        "-count=1", // Disable test caching to always run fresh tests
+        "-cover" // Show code coverage (requires Go Test Explorer extension for visual overlay)
+    ],
+    "go.testOnSave": false, // Disable running tests on every save, as this can be slow in large projects. Run manually.
+    //"go.buildOnSave": "off", // Let gopls handle build diagnostics in real-time. Avoid full build on save for performance.
+
+    // === gopls Specific Settings (nested under "gopls") ===
+    "gopls": {
+        "ui.semanticTokens": true, // Enables richer, more accurate syntax highlighting
+        "ui.completion.usePlaceholders": true, // Inserts arguments with placeholders for functions
+        "formatting.gofumpt": true, // Use gofumpt for stricter formatting (install separately: go install mvdan.cc/gofumpt@latest)
+        "staticcheck": true, // Enables all staticcheck analyzers for comprehensive static analysis. Can be verbose.
+        //"vulncheck": "Imports", // Essential for security: checks for known vulnerabilities in your dependencies
+        "build.buildFlags": [], // Add build tags here if your project uses them, e.g., ["-tags=integration"]
+        "build.directoryFilters": ["-**/vendor/**", "-**/testdata/**", "-**/.git/**"], // Optimize performance for large repos by excluding irrelevant dirs
+        "diagnosticsTrigger": "Edit" // Show errors as you type (real-time feedback)
+        //"hover.kind": "FullDocumentation", // Show full doc on hover
+        // "inlayHints.compositeLiteralFields": true, // Show field names in composite literals
+        // "inlayHints.compositeLiteralTypes": true, // Show types in composite literals
+        // "inlayHints.functionTypeParameters": true, // Show parameter names for function types
+        // "inlayHints.parameterNames": true, // Show parameter names in function calls
+        // "inlayHints.rangeVariableTypes": true, // Show types of variables in range loops
+        // "inlayHints.constantValues": true, // Show constant values
+        // "inlayHints.assignVariableTypes": true, // Show types in assignments (e.g., `x := ` -> `x: int := `)
+        // "inlayHints.typeAssertionType": true // Show type in type assertions
+    },
+
+    // === Debugging with Delve ===
+    // This is typically in .vscode/launch.json, but some basic settings can be here.
+    "go.delveConfig": {
+        "debugFlags": [], // Add any specific dlv flags here
+        "showGlobalVariables": false // Often too much noise
+    },
+    // "go.env": {
+    //     "GOPROXY": "https://proxy.golang.org,direct",
+    //     "GOSUMDB": "sum.golang.org",
+    //     "GOINSECURE": "" // Only if needed
+    // }
+}
